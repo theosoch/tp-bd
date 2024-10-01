@@ -4,6 +4,10 @@
 
 -- 
 
+SET AUTOCOMMIT ON
+
+-- 
+
 DROP TABLE Suivre;
 DROP TABLE Cours;
 DROP TABLE Moniteur;
@@ -24,18 +28,23 @@ CREATE TABLE Moniteur (
     CONSTRAINT Moniteur_primaryKey PRIMARY KEY(numMoniteur)
 );
 
+-- 
+
 CREATE TABLE Specialite (
     idSpecialite NUMBER,
     nom VARCHAR(255),
 
-    CONSTRAINT Specialite_primaryKey PRIMARY KEY(idSpecialite),
-
-    CONSTRAINT Specialite_values_nom CHECK (
-        nom = 'ski'
-        OR nom = 'snowboard'
-        OR nom = 'raquette'
-    )
+    CONSTRAINT Specialite_primaryKey PRIMARY KEY(idSpecialite)
 );
+
+ALTER TABLE Specialite
+ADD CONSTRAINT Specialite_values_nom CHECK (
+    nom = 'ski'
+    OR nom = 'snowboard'
+    OR nom = 'raquette'
+);
+
+-- 
 
 CREATE TABLE Materiel (
     codeMateriel NUMBER,
@@ -44,16 +53,20 @@ CREATE TABLE Materiel (
     prix NUMBER NOT NULL,
     qteDispo NUMBER NOT NULL,
 
-    CONSTRAINT Materiel_primaryKey PRIMARY KEY(codeMateriel),
-
-    CONSTRAINT Materiel_values_prix CHECK (
-        prix > 0
-    ),
-
-    CONSTRAINT Materiel_values_qteDispo CHECK (
-        qteDispo > 0
-    )
+    CONSTRAINT Materiel_primaryKey PRIMARY KEY(codeMateriel)
 );
+
+ALTER TABLE Materiel
+ADD CONSTRAINT Materiel_values_prix CHECK (
+    prix > 0
+);
+
+ALTER TABLE Materiel
+ADD CONSTRAINT Materiel_values_qteDispo CHECK (
+    qteDispo > 0
+);
+
+-- 
 
 CREATE TABLE Adherent (
     numAdherent NUMBER,
@@ -63,44 +76,57 @@ CREATE TABLE Adherent (
     tel VARCHAR(255),
     age NUMBER NOT NULL,
 
-    CONSTRAINT Adherent_primaryKey PRIMARY KEY(numAdherent),
-
-    CONSTRAINT Adherent_values_age CHECK (
-        age > 12 AND age < 100
-    )
+    CONSTRAINT Adherent_primaryKey PRIMARY KEY(numAdherent)
 );
+
+ALTER TABLE Adherent
+ADD CONSTRAINT Adherent_values_age CHECK (
+    age > 12 AND age < 100
+);
+
+-- 
 
 CREATE TABLE Cours (
     codeCours NUMBER,
     niveau VARCHAR(255) NOT NULL,
     nbPlaces NUMBER NOT NULL,
     dateCours DATE NOT NULL,
-    numMoniteur NUMBER,
+    numMoniteur NUMBER NOT NULL,
     idSpecialite NUMBER NOT NULL,
 
-    CONSTRAINT Cours_primaryKey PRIMARY KEY(codeCours),
-    CONSTRAINT Cours_foreignKey_numMoniteur FOREIGN KEY(numMoniteur) REFERENCES Moniteur,
-    CONSTRAINT Cours_foreignKey_idSpecialite FOREIGN KEY(idSpecialite) REFERENCES Specialite,
+    CONSTRAINT Cours_primaryKey PRIMARY KEY(codeCours)
+);
+    
+ALTER TABLE Cours
+ADD CONSTRAINT Cours_foreignKey_numMoniteur FOREIGN KEY(numMoniteur) REFERENCES Moniteur;
+    
+ALTER TABLE Cours
+ADD CONSTRAINT Cours_foreignKey_idSpecialite FOREIGN KEY(idSpecialite) REFERENCES Specialite;
 
-    CONSTRAINT Cours_values_niveau CHECK (
-        niveau = 'debutant'
-        OR niveau = 'moyen'
-        OR niveau = 'confirme'
-        OR niveau = 'competition'
-    ),
-
-    CONSTRAINT Cours_values_nbPlaces CHECK (
-        nbPlaces > 0
-    )
+ALTER TABLE Cours
+ADD CONSTRAINT Cours_values_niveau CHECK (
+    niveau = 'debutant'
+    OR niveau = 'moyen'
+    OR niveau = 'confirme'
+    OR niveau = 'competition'
 );
 
+ALTER TABLE Cours
+ADD CONSTRAINT Cours_values_nbPlaces CHECK (
+    nbPlaces > 0
+);
+
+-- 
+
 CREATE TABLE Suivre (
-    numAdherent NUMBER,
-    codeCours NUMBER,
+    numAdherent NUMBER NOT NULL,
+    codeCours NUMBER NOT NULL,
 
     CONSTRAINT Suivre_foreignKey_numAdherent FOREIGN KEY(numAdherent) REFERENCES Adherent,
     CONSTRAINT Suivre_foreignKey_codeCours FOREIGN KEY(codeCours) REFERENCES Cours
 );
+
+-- 
 
 CREATE TABLE Louer (
     numAdherent NUMBER,
@@ -108,11 +134,12 @@ CREATE TABLE Louer (
     quantite NUMBER NOT NULL,
 
     CONSTRAINT Louer_foreignKey_numAdherent FOREIGN KEY(numAdherent) REFERENCES Adherent,
-    CONSTRAINT Louer_foreignKey_codeMateriel FOREIGN KEY(codeMateriel) REFERENCES Materiel,
+    CONSTRAINT Louer_foreignKey_codeMateriel FOREIGN KEY(codeMateriel) REFERENCES Materiel
+);
 
-    CONSTRAINT Louer_values_quantite CHECK (
-        quantite > 0
-    )
+ALTER TABLE Louer
+ADD CONSTRAINT Louer_values_quantite CHECK (
+    quantite > 0
 );
 
 -- 
