@@ -1,20 +1,16 @@
 -- 
--- TP n°1
+-- TP n°2 - Partie n°1
 -- 
 
 -- 
 
-SET AUTOCOMMIT ON
-
--- 
-
--- SELECT * FROM Moniteur;
--- SELECT * FROM Specialite;
--- SELECT * FROM Cours;
--- SELECT * FROM Adherent;
--- SELECT * FROM Materiel;
--- SELECT * FROM Suivre;
--- SELECT * FROM Louer;
+SELECT * FROM Moniteur;
+SELECT * FROM Specialite;
+SELECT * FROM Cours;
+SELECT * FROM Adherent;
+SELECT * FROM Materiel;
+SELECT * FROM Suivre;
+SELECT * FROM Louer;
 
 -- 
 
@@ -45,3 +41,7 @@ UPDATE Materiel SET Materiel.prix = Materiel.prix*1.1;
 -- 4.f
 UPDATE Materiel SET Materiel.qteDispo = Materiel.qteDispo+2
 WHERE Materiel.codeMateriel = 1;
+
+-- 
+
+COMMIT;

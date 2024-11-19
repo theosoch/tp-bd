@@ -4,10 +4,6 @@
 
 -- 
 
-SET AUTOCOMMIT ON
-
--- 
-
 DROP TABLE Suivre;
 DROP TABLE Cours;
 DROP TABLE Moniteur;
@@ -219,3 +215,7 @@ VALUES (3, 1, 1);
 
 INSERT INTO Louer(numAdherent, codeMateriel, quantite)
 VALUES (2, 1, 2);
+
+-- 
+
+COMMIT;

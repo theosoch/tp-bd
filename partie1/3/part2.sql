@@ -1,3 +1,9 @@
+-- 
+-- TP n°3 - Partie n°2
+-- 
+
+-- 
+
 -- 1.
 SELECT * FROM GILLES_HUBERT.SRC1_MAGASINS;
 SELECT * FROM GILLES_HUBERT.SRC1_VENDRE;
@@ -96,3 +102,7 @@ WHERE
     AND Vendre.codeP = Produit.codeP
     AND Magasin.raisonSoc = Vendre.raisonSoc
 ;
+
+-- 
+
+COMMIT;
