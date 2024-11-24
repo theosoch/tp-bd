@@ -1,5 +1,5 @@
 -- 
--- TP n°1
+-- TP n°2
 -- 
 
 -- Q.0.a
@@ -606,14 +606,14 @@ FROM
                 EFFECTUER E2
             WHERE
                 (
-                    R1.nuPilote != R2.nuPilote
-                    AND R1.nuCo = R2.nuCo
+                    E1.nuPilote != E2.nuPilote
+                    AND E1.nuCo = E2.nuCo
                 )
                 AND (
                     E1.classement > 1
                     AND E2.classement > 1
                 )
-                AND R1.tempsTour >= R2.tempsTour
+                AND E1.tempsTour >= E2.tempsTour
         )
     ) R
 WHERE
